@@ -1,0 +1,135 @@
+send friend request
+
+curl -X POST http://localhost:8080/friends/request \
+-H "Content-Type: application/json" \
+-d '{
+    "from_user": "user1",
+    "to_user": "user2"
+}'
+
+
+
+===============================================
+accept friend request
+
+curl -X POST http://localhost:8080/friends/accept \
+-H "Content-Type: application/json" \
+-d '{
+    "to_user": "user2",
+    "request_id": "request_id"
+}'
+
+================================================
+Reject
+
+curl -X POST http://localhost:8080/friends/reject \
+-H "Content-Type: application/json" \
+-d '{
+    "to_user": "user2",
+    "request_id": "request_id"
+}'
+
+
+==============================================
+Remove
+
+
+curl -X POST http://localhost:8080/friends/remove \
+-H "Content-Type: application/json" \
+-d '{
+    "user_id": "user1",
+    "friend_id": "user2"
+}'
+
+=================================================
+Get list 
+
+curl -X GET "http://localhost:8080/friends?user_id=user1"
+
+
+====================================================
+===================================================
+PARTY
+===================================================
+===================================================
+create party
+
+curl -X POST http://localhost:8080/party/create \
+-H "Content-Type: application/json" \
+-d '{
+    "leader_id": "user1"
+}'
+
+
+===================================================
+invite Party
+
+
+curl -X POST http://localhost:8080/party/invite \
+-H "Content-Type: application/json" \
+-d '{
+    "party_id": "d0369701-0dbc-4533-a9d9-88d02c5748ff",
+    "inviter_id": "user1",
+    "invitee_id": "user2"
+}'
+====================================================
+Join party
+
+curl -X POST http://localhost:8080/party/join -H "Content-Type: application/json" -d '{
+    "party_id": "d0369701-0dbc-4533-a9d9-88d02c5748ff",
+    "user_id": "user2",
+    "leader_id":"user1"
+}'
+
+
+=====================================================
+Leave party 
+
+curl -X DELETE http://localhost:8080/party/leave \
+-H "Content-Type: application/json" \
+-d '{
+    "party_id": "d0369701-0dbc-4533-a9d9-88d02c5748ff",
+    "user_id": "user2",
+    "leader_id":"user1"
+}'
+
+====================================================
+accept invite
+
+curl -X POST http://localhost:8080/party/accept-invite -H "Content-Type: application/json" -d '{
+    "party_id": "d0369701-0dbc-4533-a9d9-88d02c5748ff",
+    "user_id": "user2",
+    "leader_id":"user1"
+}'
+ ========================================
+reject invite
+
+
+curl -X POST http://localhost:8080/party/accept-invite -H "Content-Type: application/json" -d '{
+    "party_id": "d0369701-0dbc-4533-a9d9-88d02c5748ff",
+    "user_id": "user2",
+    "leader_id":"user1"
+}'
+
+==============================================
+Remove user from party
+
+curl -X DELETE http://localhost:8080/party/user -H "Content-Type: application/json" -d '{
+    "party_id": "d0369701-0dbc-4533-a9d9-88d02c5748ff",
+    "user_id": "user2","party_leader":"user1"
+}'
+
+
+
+=====================================
+for opening websocket connections
+==========================================
+
+user friends online status
+
+ws://localhost:8080/friend/online-status?user_id=user1
+
+===================================================
+party members status
+
+ws://localhost:8080/party/party-status?leader_id=user1&party_id=e5681b8f-c88e-4a1b-8e31-25d2539e18c8
